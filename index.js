@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { config } = require("./config");
+const { validate, ValidationError, Joi } = require('express-validation')
 const auth = require("./routes/auth");
 const buyer = require("./routes/buyer");
 const seller = require("./routes/seller");
 
 //Connect to db
 mongoose.connect(
-	'mongodb://localhost:27017/twitterDB',
+	`${config['MONGO_CONNECTION_URL']}/e-commerce-marketplace`,
 	{
 		useNewUrlParser:true,
 		useUnifiedTopology:true,
@@ -27,6 +28,13 @@ app.use(`${config['BASE_API_PATH']}/auth`, auth);
 app.use(`${config['BASE_API_PATH']}/buyers`, buyer);
 app.use(`${config['BASE_API_PATH']}/sellers`, seller);
 
+app.use((err, req, res, next) => {
+	if (err instanceof ValidationError) {
+	  return res.status(400).json(err);
+	}
+	return res.status(500).json(err);
+  })
+
 app.listen(config['SERVER_PORT'], () => {
-	console.log("Server is running on ", config['SERVER_PORT']);
+	console.log("Server is running on", config['SERVER_PORT']);
 });

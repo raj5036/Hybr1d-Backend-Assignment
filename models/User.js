@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {Schema,model}=require('mongoose');
 
 let user = {
     user_id     :  {type:String, required:false, unique:true},
