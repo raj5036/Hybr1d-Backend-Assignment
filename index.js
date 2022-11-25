@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
-const app = express();
+const { config } = require("./config");
+const auth = require("./routes/auth");
+const buyer = require("./routes/buyer");
+const seller = require("./routes/seller");
 
 //Connect to db
 mongoose.connect(
@@ -18,10 +20,13 @@ db.once('open', () => {
 	console.log("Connected to DB");
 });
 
-app.get("/", (req, res) => {
-	res.send("Ok");
-});
+const app = express();
+app.use(express.json());
 
-app.listen("3001", () => {
-	console.log("Server is running on 3001");
+app.use(`${config['BASE_API_PATH']}/auth`, auth);
+app.use(`${config['BASE_API_PATH']}/buyers`, buyer);
+app.use(`${config['BASE_API_PATH']}/sellers`, seller);
+
+app.listen(config['SERVER_PORT'], () => {
+	console.log("Server is running on ", config['SERVER_PORT']);
 });
