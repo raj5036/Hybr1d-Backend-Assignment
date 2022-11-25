@@ -14,4 +14,9 @@ exports.ERROR = {
 		code: "INTERNAL_SERVER_ERROR",
 		message: "Something wrong happened"
 	},
+	WRONG_CREDENTIALS_ERROR: {
+		status: 500,
+		code: "WRONG_CREDENTIALS_ERROR",
+		message: "Please enter correct credentials"
+	},
 };

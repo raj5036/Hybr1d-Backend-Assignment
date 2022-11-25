@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
+const jwt = require("jsonwebtoken");
 const { ERROR } = require("../../handlers/error");
 const User = require("../../models/User");
 
@@ -40,7 +41,33 @@ const handle_user_registration = async (req, res) => {
 	}
 };
 
-const handle_user_login = (req, res) => {};
+const handle_user_login = async (req, res) => {
+	const {email, password} = req.body;
+
+	const user = req.user;
+	let is_valid_password = await bcrypt.compare(password, user.password);
+    
+    if (!is_valid_password) {
+        res.status(ERROR.WRONG_CREDENTIALS_ERROR.status).send(ERROR.WRONG_CREDENTIALS_ERROR.message);
+        return;
+    }
+
+	let payload = {
+		id: user.user_id,
+		email: user.email,
+		firstname: user.firstname,
+		lastname : user.lastname,
+		type: user.type
+	};
+	
+	let access_token=jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+
+	res.status(200).json({
+		success: true,
+		msg: 'Login successful',
+		token: access_token,
+	  }); 
+};
 
 module.exports = {
 	handle_user_registration,
