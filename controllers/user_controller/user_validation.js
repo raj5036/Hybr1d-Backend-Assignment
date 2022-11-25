@@ -6,7 +6,7 @@ module.exports.user_signup_validation = {
 		lastname: joi.string().required(),
 		email: joi.string().required(),
 		password: joi.string().required(),
-        type: joi.string().required(),
+        type: joi.string().valid("SELLER", "BUYER").required(),
 		avatar: joi.string().optional()
     },
 };
