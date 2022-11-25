@@ -9,7 +9,10 @@ const check_if_user_exists = async (req, res, next) => {
         req.user = user;
         next();
     } else {
-        return res.status(ERROR.USER_NOT_FOUND.status).send(ERROR.USER_NOT_FOUND.message);
+        return res.status(ERROR.USER_NOT_FOUND.status).json({
+			code: ERROR.USER_NOT_FOUND.code,
+			message: ERROR.USER_NOT_FOUND.message
+		});
     }
 };
 

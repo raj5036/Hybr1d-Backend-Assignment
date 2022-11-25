@@ -32,9 +32,12 @@ const handle_user_registration = async (req, res) => {
 		}
 
 		const response = await User.create(new_user);
+
+		let access_token=jwt.sign(new_user, process.env.ACCESS_TOKEN_SECRET);
 		res.status(201).json({
 			code: "SUCCESS",
-			message: "New user created"
+			data: response,
+			access_token: access_token
 		});
 	} catch (error) {
 		console.error("Error occurred while creating new user ", error);
