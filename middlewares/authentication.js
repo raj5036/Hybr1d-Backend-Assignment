@@ -2,8 +2,8 @@ const { ERROR } = require("../handlers/error");
 const User = require("../models/User");
 
 const check_if_user_exists = async (req, res, next) => {
-	let {email} = req.body;
-    let user = await User.findOne({email:email});
+	let { username } = req.body;
+    let user = await User.findOne({username: username});
 
     if (user) {
         req.user = user;

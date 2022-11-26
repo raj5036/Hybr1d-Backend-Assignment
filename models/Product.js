@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const {Schema,model}=require('mongoose');
 
 let product = {
-    product_id: {type: String, required: false, unique: true},
+    product_id: {type: String, required: true, unique: true},
     product_name: {type: String, required: true},
 	seller_id: {type: String, required: true},
 	catalog_id: {type: String, required: true},

@@ -27,7 +27,7 @@ exports.ERROR = {
 	CATALOG_ALREADY_EXISTS: {
 		status: 409,
 		code: "CATALOG_ALREADY_EXISTS",
-		message: "Seller can not have more one catalog"
+		message: "Seller can not have more than one catalog"
 	},
 	NO_CATALOG_FOUND: {
 		status: 404,

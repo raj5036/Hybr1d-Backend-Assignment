@@ -4,7 +4,7 @@ const {Schema,model}=require('mongoose');
 let user = {
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
+    username: {type: String, required: true, unique: true},
     password: {type: String, required: true, unique: true},
     avatar: {type: String, required: false, default: ''},
     created_on: {type: Date, required: false, default: Date.now},

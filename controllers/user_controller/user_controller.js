@@ -6,10 +6,10 @@ const User = require("../../models/User");
 
 const handle_user_registration = async (req, res) => {
 	try {
-		const {firstname, lastname, email, password, avatar, type} = req.body;
+		const {firstname, lastname, username, password, avatar, type} = req.body;
 		
 		//Check if user already exists
-		const user = await User.findOne({email: email});
+		const user = await User.findOne({username: username});
 		if (user) {
 			return res.status(ERROR.USER_ALREADY_EXISTS.status).send(ERROR.USER_ALREADY_EXISTS.message);
 		}
@@ -21,7 +21,7 @@ const handle_user_registration = async (req, res) => {
 		const new_user = {
 			firstname: firstname,
 			lastname: lastname,
-			email: email, 
+			username: username, 
 			password: hashed_password,
 			type: type
 		};
@@ -45,7 +45,7 @@ const handle_user_registration = async (req, res) => {
 };
 
 const handle_user_login = async (req, res) => {
-	const {email, password} = req.body;
+	const {username, password} = req.body;
 
 	const user = req.user;
 	let is_valid_password = await bcrypt.compare(password, user.password);
@@ -57,7 +57,7 @@ const handle_user_login = async (req, res) => {
 
 	let payload = {
 		id: user._id.toString(),
-		email: user.email,
+		username: user.username,
 		firstname: user.firstname,
 		lastname : user.lastname,
 		type: user.type

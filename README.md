@@ -14,7 +14,7 @@ curl --location --request POST 'http://localhost:3001/api/auth/register' \
 --data-raw '{
   "firstname": "Raj",
   "lastname": "Seller",
-  "email": "raj+seller1@kommunicate.io",
+  "username": "raj+seller1@kommunicate.io",
   "password": "djkskfs",
   "type": "SELLER"
 }'
@@ -24,7 +24,7 @@ Login existing user
 curl --location --request POST 'http://localhost:3001/api/auth/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-   "email": "raj+seller@kommunicate.io",
+   "username": "raj+seller@kommunicate.io",
   "password": "djkskfs"
 }'
 ```
