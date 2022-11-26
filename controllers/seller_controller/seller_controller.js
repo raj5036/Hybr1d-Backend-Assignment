@@ -67,7 +67,7 @@ const get_list_of_orders = async (req, res) => {
 		res.status(200).json({
 			code: "SUCCESS",
 			data: response,
-			message: "Successfully fetched orders for" + catalog_id
+			message: "Successfully fetched orders for seller " + seller.user_id
 		});
 	} catch (error) {
 		console.error("Error occurred while fetching orders ", error);
