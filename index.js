@@ -27,8 +27,8 @@ const app = express();
 app.use(express.json());
 
 app.use(`${config['BASE_API_PATH']}/auth`, auth);
-app.use(`${config['BASE_API_PATH']}/buyers`, buyer);
-app.use(`${config['BASE_API_PATH']}/sellers`, seller);
+app.use(`${config['BASE_API_PATH']}/buyer`, buyer);
+app.use(`${config['BASE_API_PATH']}/seller`, seller);
 
 app.use((err, req, res, next) => {
 	if (err instanceof ValidationError) {
