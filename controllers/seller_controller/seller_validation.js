@@ -5,7 +5,8 @@ module.exports.create_catalog_validation = {
         products: joi.array().items(joi.object({
 			name: joi.string().required(),
 			price: joi.number().required(),
-			avatar: joi.string().optional()
+			avatar: joi.string().optional(),
+			no_of_units_available: joi.string().required()
 		})),
     },
 };

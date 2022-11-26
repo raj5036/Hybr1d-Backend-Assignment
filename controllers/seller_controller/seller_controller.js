@@ -12,15 +12,21 @@ const create_catalog = async (req, res) => {
 		const catalog_id = uuid.v4();
 
 		//save product_ids to save in Catalogs
-		const product_ids = products.map(product => {
+		const product_data = products.map(product => {
 			let product_id = uuid.v4()
-			return product_id;
+			return {
+				product_id,
+				product_name: product.name,
+				price: product.price,
+				avatar: product.avatar,
+				no_of_units_available: product.no_of_units_available
+			};
 		});
 
 		//Save products before saving catalogs
 		products.map(async (product, index) => (
 			await Product.create({
-				product_id: product_ids[index],
+				product_id: product_data[index]["product_id"],
 				product_name: product.name,
 				seller_id: seller.user_id,
 				catalog_id: catalog_id,
@@ -34,7 +40,7 @@ const create_catalog = async (req, res) => {
 		//save catalogs in db
 		let catalog = {
 			catalog_id: catalog_id,
-			products: product_ids,
+			products: product_data,
 			seller_id: seller.user_id,
 		};
 		const response  = await Catalog.create(catalog);
