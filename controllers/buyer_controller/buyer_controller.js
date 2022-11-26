@@ -28,16 +28,15 @@ const get_catalog_by_seller_id = async (req, res) => {
 		const response = await Catalog.findOne({seller_id});
 
 		if (!response) {
-			return res.status(ERROR.NO_SELLER_FOUND.status).json({
-				code: ERROR.NO_SELLER_FOUND.code,
-				message: ERROR.NO_SELLER_FOUND.message,
-				error: error
+			return res.status(ERROR.NO_CATALOG_FOUND.status).json({
+				code: ERROR.NO_CATALOG_FOUND.code,
+				message: ERROR.NO_CATALOG_FOUND.message,
 			});
 		}
 
 		res.status(200).json({
 			code: "SUCCESS",
-			message: "Seller found",
+			message: "Catalog found",
 			data: response
 		});
 	} catch (error) {
@@ -55,23 +54,23 @@ const create_order = async (req, res) => {
 		const { seller_id } = req.params;
 		const { products } = req.body;
 		
-		const products_in_db = req.products;
+		const product_details = req.products;
 
 		let updated_product_details = [];
 		products.map(async (product, index) => {
 			let updated_product_detail = {
-				...products_in_db[index],
-				no_of_units_available: products_in_db[index].no_of_units_available - product.units_required
+				...product_details[index],
+				no_of_units_available: product_details[index].no_of_units_available - product.units_required
 			};
 			updated_product_details.push(updated_product_detail);
 
 			await Product.updateOne(
 				{product_id: product.product_id},
-				updated_product_detail
+				{no_of_units_available: updated_product_detail.no_of_units_available}
 			);
 		});
 
-		const catalog_id = products_in_db[0].catalog_id;
+		const catalog_id = product_details[0].catalog_id;
 		
 		//Update seller's catalog details as well
 		await Catalog.updateOne(
@@ -80,13 +79,11 @@ const create_order = async (req, res) => {
 		);
 
 		//Insert order-details in db
-		const response = await Order.create({
-			order_id: uuid.v4(),
+		await Order.create({
 			products: products,
 			seller_id: seller_id,
 			catalog_id: catalog_id,
-			buyer_id: req.user.user_id,
-			is_processed: true,
+			buyer_id: req.user.id
 		});
 
 		return res.status(200).json({

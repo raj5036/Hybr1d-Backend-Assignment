@@ -13,7 +13,7 @@ const create_catalog = async (req, res) => {
 
 		//save product_ids to save in Catalogs
 		const product_data = products.map(product => {
-			let product_id = uuid.v4()
+			let product_id = uuid.v4();
 			return {
 				product_id,
 				product_name: product.name,
@@ -28,7 +28,7 @@ const create_catalog = async (req, res) => {
 			await Product.create({
 				product_id: product_data[index]["product_id"],
 				product_name: product.name,
-				seller_id: seller.user_id,
+				seller_id: seller.id,
 				catalog_id: catalog_id,
 				price: product.price,
 				avatar: product.avatar,
@@ -41,7 +41,7 @@ const create_catalog = async (req, res) => {
 		let catalog = {
 			catalog_id: catalog_id,
 			products: product_data,
-			seller_id: seller.user_id,
+			seller_id: seller.id,
 		};
 		const response  = await Catalog.create(catalog);
 		
@@ -62,12 +62,12 @@ const create_catalog = async (req, res) => {
 const get_list_of_orders = async (req, res) => {
 	try {
 		const seller = req.user;
-		const response = await Order.find({seller_id: seller.user_id});
+		const response = await Order.find({seller_id: seller.id});
 
 		res.status(200).json({
 			code: "SUCCESS",
 			data: response,
-			message: "Successfully fetched orders for seller " + seller.user_id
+			message: "Successfully fetched orders for seller " + seller.id
 		});
 	} catch (error) {
 		console.error("Error occurred while fetching orders ", error);

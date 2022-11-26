@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const {Schema,model}=require('mongoose');
 
 let user = {
-    user_id: {type: String, required: false, unique: true},
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
     email: {type: String, required: true, unique: true},

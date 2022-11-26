@@ -9,7 +9,7 @@ const check_if_order_feasible = async (req, res, next) => {
 			const response = await Product.findOne({product_id: product.product_id}).lean();
 
 			if (!response) {
-				return res.end();
+				return res.status(ERROR.NO_PRODUCT_FOUND.status).end();
 			} else if (response.no_of_units_available < product.units_required) {
 				return res.status(ERROR.ORDER_CAN_NOT_BE_FULFILLED.status).json({
 					code: ERROR.ORDER_CAN_NOT_BE_FULFILLED.code,

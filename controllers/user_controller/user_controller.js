@@ -19,7 +19,6 @@ const handle_user_registration = async (req, res) => {
 		const hashed_password = await bcrypt.hash(password, salt);
 
 		const new_user = {
-			user_id: uuid.v4(),
 			firstname: firstname,
 			lastname: lastname,
 			email: email, 
@@ -32,6 +31,7 @@ const handle_user_registration = async (req, res) => {
 		}
 
 		const response = await User.create(new_user);
+		new_user.id = response._id.toString();
 
 		let access_token=jwt.sign(new_user, process.env.ACCESS_TOKEN_SECRET);
 		res.status(201).json({
@@ -56,7 +56,7 @@ const handle_user_login = async (req, res) => {
     }
 
 	let payload = {
-		id: user.user_id,
+		id: user._id.toString(),
 		email: user.email,
 		firstname: user.firstname,
 		lastname : user.lastname,
