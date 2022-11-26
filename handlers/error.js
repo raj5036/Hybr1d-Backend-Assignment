@@ -1,6 +1,6 @@
 exports.ERROR = {
 	USER_NOT_FOUND: {
-		status: 400,
+		status: 404,
         code: "USER_NOT_FOUND",
         message: "user does not exist"
 	},
@@ -28,5 +28,10 @@ exports.ERROR = {
 		status: 409,
 		code: "CATALOG_ALREADY_EXISTS",
 		message: "Seller can not have more one catalog"
+	},
+	NO_SELLER_FOUND: {
+		status: 404,
+		code: "NO_SELLER_FOUND",
+		message: "No Seller found with provided seller-id"
 	},
 };
