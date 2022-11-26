@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const { config } = require("./config");
-const { validate, ValidationError, Joi } = require('express-validation')
+const { ValidationError } = require('express-validation')
 const auth = require("./routes/auth");
 const buyer = require("./routes/buyer");
 const seller = require("./routes/seller");
