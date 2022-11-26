@@ -9,15 +9,6 @@ const create_catalog = async (req, res) => {
 		const {products} = req.body;
 		const seller = req.user;
 
-		//Check if seller already has a catalog registered
-		const doesCatalogExist = await Catalog.findOne({seller_id: seller.user_id}).lean();
-		if (doesCatalogExist) {
-			return res.status(ERROR.CATALOG_ALREADY_EXISTS.status).json({
-				code: ERROR.CATALOG_ALREADY_EXISTS.code,
-				message: ERROR.CATALOG_ALREADY_EXISTS.message
-			});
-		}
-
 		const catalog_id = uuid.v4();
 
 		//save product_ids to save in Catalogs
@@ -35,6 +26,7 @@ const create_catalog = async (req, res) => {
 				catalog_id: catalog_id,
 				price: product.price,
 				avatar: product.avatar,
+				no_of_units_available: product.no_of_units_available
 			})
 		));
 		
@@ -44,9 +36,9 @@ const create_catalog = async (req, res) => {
 			catalog_id: catalog_id,
 			products: product_ids,
 			seller_id: seller.user_id,
-			is_sold_out: false
 		};
 		const response  = await Catalog.create(catalog);
+		
 		res.status(201).json({
 			code: "SUCCESS",
 			data: response,

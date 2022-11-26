@@ -6,7 +6,7 @@ let catalog = {
     products: {type: Array, required: true, default: []},
 	seller_id: {type: String, required: true},
     created_on: {type: Date, required: false, default: Date.now},
-    is_sold_out: {type: Boolean, required: true},
+    is_sold_out: {type: Boolean, required: true, default: false},
 };
 
 let Catalog = model('catalogs', new Schema(catalog));
