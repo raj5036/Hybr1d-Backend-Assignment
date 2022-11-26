@@ -34,4 +34,9 @@ exports.ERROR = {
 		code: "NO_SELLER_FOUND",
 		message: "No Seller found with provided seller-id"
 	},
+	ORDER_CAN_NOT_BE_FULFILLED: {
+		status: 400,
+		code: "ORDER_CAN_NOT_BE_FULFILLED",
+		message: "Order can not be fulfilled due to un-available units"
+	}
 };
